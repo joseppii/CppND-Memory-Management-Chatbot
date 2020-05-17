@@ -60,7 +60,7 @@ ChatBot::ChatBot(const ChatBot &chatbot)
 // copy constructor WITH memory allocation
 ChatBot &ChatBot::operator=(const ChatBot &chatbot)
 {
-    std::cout << "ChatBot Copy Assignement Operator" << std::endl;
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
     
     // invalidate data handles
     if (&chatbot == this)
@@ -80,6 +80,7 @@ ChatBot &ChatBot::operator=(const ChatBot &chatbot)
 // move constructor
 ChatBot::ChatBot(ChatBot &&chatBot)
 {
+    std::cout << "ChatBot Move Constructor\n";
 
     _chatLogic = chatBot._chatLogic;
     chatBot._chatLogic = nullptr;
@@ -94,6 +95,8 @@ ChatBot::ChatBot(ChatBot &&chatBot)
 // move assignment operator
 ChatBot &ChatBot::operator=(ChatBot &&chatBot)
 {
+    std::cout << "ChatBot Move Assignment Operator\n";
+
     if (this == &chatBot)
     {
         return *this;
@@ -160,6 +163,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
 
+    _chatLogic->SetChatbotHandle(this);
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
 }
